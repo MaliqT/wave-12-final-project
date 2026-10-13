@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF=8" />
+        <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
         <title>PTO Tracker</title>
@@ -13,77 +13,91 @@
             <nav>
                 <h2>PTO Tracker</h2>
                 <ul>
-                    <li>Dashboard</li>
+                    <li class="active">Dashboard</li>
                     <li>PTO Requests</li>
                     <li>Calendar</li>
                     <li>Settings</li>
                 </ul>
             </nav>
-            <section class="summary">
-                <article class="summary-card">
-                    <h3>Current PTO</h2>
-                    <p>30.6 hrs</p>
-                    <p>Available Balance</p>
-                </article>
 
-                <article class="summary-card">
-                    <h3>Accrual Rate</h2>
-                    <p>2.0 hrs</p>
-                    <p>Per Paycheck</p>
-                </article>
-
-                <article class="summary-card">
-                    <h3>Next Paycheck</h2>
-                    <p>Oct 5, 2026</p>
-                    <p>12 days away</p>
-                </article>
-            </section>
-
-            <section class="projection">
-                <h3>PTO Projection</h3>
-                <p>Select a future date to see your estimated PTO balance</p>
-
-                <form class="projection-form">
-                    <label for="projection-date">Future Date</label>
-                    <input
-                        type="date"
-                        id="projection-date"
-                        name="projection-date"
-                    >
-
-                    <button type="submit">Calculate</button>
-                </form>
-
-                <div class="projection-result">
-                    <p>Projected PTO</p>
-                    <p>68.5 hrs</p>
-                </div>
-            </section>
-
-            <section class="requests">
-                <h3>Upcoming PTO Requests</h3>
-                    <div class="requests-list">
-                        <article class="request">
-                            <p>November 12 - November 14</p>
-                            <p>24 hrs</p>
-                            <p>Scheduled</p>
-                        </article>
-
-                        <article class="request">
-                            <p>December 24 - December 25</p>
-                            <p>16 hrs</p>
-                            <p>Pending</p>
-                        </article>
-
-                        <article class="request">
-                            <p>January 10 - January 16</p>
-                            <p>56 hrs</p>
-                            <p>Planned</p>
-                        </article>
+            <div class="dashboard">
+                <header class="dashboard-header">
+                    <div class="header-text">
+                        <h1>Good morning, Alex!</h1>
+                        <p>Here's your PTO overview</p>
                     </div>
 
-                    <button type="button">+ Add Request</button>
-            </section>
+                    <time datatime="2026-10-3">
+                        Sat, Oct 3, 2026
+                    </time>
+                </header>
+                
+                <section class="summary">
+                    <article class="summary-card">
+                        <h3>Current PTO</h3>
+                        <p>30.6 hrs</p>
+                        <p>Available Balance</p>
+                    </article>
+
+                    <article class="summary-card">
+                        <h3>Accrual Rate</h3>
+                        <p>2.0 hrs</p>
+                        <p>Per Paycheck</p>
+                    </article>
+
+                    <article class="summary-card">
+                        <h3>Next Paycheck</h3>
+                        <p>Oct 5, 2026</p>
+                        <p>12 days away</p>
+                    </article>
+                </section>
+
+                <section class="projection">
+                    <h3>PTO Projection</h3>
+                    <p>Select a future date to see your estimated PTO balance</p>
+
+                    <form class="projection-form">
+                        <label for="projection-date">Future Date</label>
+                        <input
+                            type="date"
+                            id="projection-date"
+                            name="projection-date"
+                        >
+
+                        <button type="submit">Calculate</button>
+                    </form>
+
+                    <div class="projection-result">
+                        <p>Projected PTO</p>
+                        <p>68.5 hrs</p>
+                    </div>
+                </section>
+
+                <section class="requests">
+                    <h3>Upcoming PTO Requests</h3>
+                        <div class="requests-list">
+                            <article class="request">
+                                <p>November 12 - November 14</p>
+                                <p>24 hrs</p>
+                                <p>Scheduled</p>
+                            </article>
+
+                            <article class="request">
+                                <p>December 24 - December 25</p>
+                                <p>16 hrs</p>
+                                <p>Pending</p>
+                            </article>
+
+                            <article class="request">
+                                <p>January 10 - January 16</p>
+                                <p>56 hrs</p>
+                                <p>Planned</p>
+                            </article>
+                        </div>
+
+                        <button type="button">+ Add Request</button>
+                </section>
+            </div>
         </main>
     </body>
 </html>
