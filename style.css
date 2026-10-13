@@ -4,42 +4,117 @@
 
 body {
     margin: 25px;
+    background-color: #f6f8fc;
+    font-family: Arial, sans-serif;
+    color: #172b4d;
 }
 
 main {
     min-height: 100vh;
     display: grid;
-    grid-template-columns: 250px 1fr 1fr;
-    gap: 20px;
+    grid-template-columns: 250px minmax(0, 1fr);
 }
 
+
 nav {
-    grid-column: 1 / 2;
-    grid-row: 1 / 4;
-    border: 1px solid black;
+    background-color: white;
+    padding: 30px 20px;
+    border-right: 1px solid #e5eaf1;
+}
+
+nav h2 {
+    font-size: 1.4rem;
+    margin: 0 0 35px;
+    color: #172b4d;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+nav li {
+    padding: 12px 15px;
+    border-radius: 8px;
+    color: #405775;
+}
+
+nav li.active {
+    background-color: #e5f0ff;
+    color: #173d6b;
+    font-weight: bold;
+}
+
+
+.dashboard {
+    padding: 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    align-content: start;
 }
 
 .summary {
-    grid-column: 2 / 4;
+    grid-column: 1 / 3;
 
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
 }
 
-.summary-card {
-    border: 1px solid black;
-    padding: 20px;
-}
-
 .projection {
-    grid-column: 2 / 3;
-    border: 1px solid black;
-    padding: 20px;
+    grid-column: 1 / 2;
 }
 
 .requests {
-    grid-column: 3 / 4;
-    border: 1px solid black;
+    grid-column: 2 / 3;
+}
+
+.summary-card,
+.projection,
+.requests {
+    background-color: white;
     padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.summary-card h3,
+.projection h3,
+.requests h3 {
+    margin-top: 0;
+    font-size: 1rem;
+    color: #2d4848;
+}
+
+.dashboard-header {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.dashboard-header h1 {
+    margin: 0 0 6px;
+    font-size: 1.5rem;
+    color: #172b4d;
+}
+
+.dashboard-header p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #536789;
+}
+
+.dashboard-header time {
+    margin-top: 5px;
+    font-size: 0.8rem;
+    color: #536789;
+    white-space: nowrap;
 }
