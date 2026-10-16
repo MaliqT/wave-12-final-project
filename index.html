@@ -35,41 +35,44 @@
                 <section class="summary">
                     <article class="summary-card">
                         <h3>Current PTO</h3>
-                        <p>30.6 hrs</p>
-                        <p>Available Balance</p>
+                        <p class="summary-value">30.6 hrs</p>
+                        <p class="summary-label">Available Balance</p>
                     </article>
 
                     <article class="summary-card">
                         <h3>Accrual Rate</h3>
-                        <p>2.0 hrs</p>
-                        <p>Per Paycheck</p>
+                        <p class="summary-value">2.0 hrs</p>
+                        <p class="summary-label">Per Paycheck</p>
                     </article>
 
-                    <article class="summary-card">
+                    <article class="summary-card summary-card-paycheck">
                         <h3>Next Paycheck</h3>
-                        <p>Oct 5, 2026</p>
-                        <p>12 days away</p>
+                        <p class="summary-value">Oct 5, 2026</p>
+                        <p class="summary-label">12 days away</p>
                     </article>
                 </section>
 
                 <section class="projection">
                     <h3>PTO Projection</h3>
-                    <p>Select a future date to see your estimated PTO balance</p>
+                    <p class="projection-description">
+                        Select a future date to see your estimated PTO balance
+                    </p>
 
                     <form class="projection-form">
-                        <label for="projection-date">Future Date</label>
+                        <label for="projection-date" class="projection-hidden">Future Date</label>
                         <input
                             type="date"
                             id="projection-date"
                             name="projection-date"
+                            required
                         >
 
                         <button type="submit">Calculate</button>
                     </form>
 
                     <div class="projection-result">
-                        <p>Projected PTO</p>
-                        <p>68.5 hrs</p>
+                        <p class="projection-result-label">Projected PTO</p>
+                        <p class="projection-result-value">68.5 hrs</p>
                     </div>
                 </section>
 
@@ -77,25 +80,25 @@
                     <h3>Upcoming PTO Requests</h3>
                         <div class="requests-list">
                             <article class="request">
-                                <p>November 12 - November 14</p>
-                                <p>24 hrs</p>
-                                <p>Scheduled</p>
+                                <p class="request-date">November 12 - November 14</p>
+                                <p class="request-hours">24 hrs</p>
+                                <span class="request-status status-scheduled">Scheduled</span>
                             </article>
 
                             <article class="request">
-                                <p>December 24 - December 25</p>
-                                <p>16 hrs</p>
-                                <p>Pending</p>
+                                <p class="request-date">December 24 - December 25</p>
+                                <p class="request-hours">16 hrs</p>
+                                <span class="request-status status-pending">Pending</span>
                             </article>
 
                             <article class="request">
-                                <p>January 10 - January 16</p>
-                                <p>56 hrs</p>
-                                <p>Planned</p>
+                                <p class="request-date">January 10 - January 16</p>
+                                <p class="request-hours">56 hrs</p>
+                                <span class="request-status status-planned">Planned</span>
                             </article>
                         </div>
 
-                        <button type="button">+ Add Request</button>
+                        <button type="button"  class="add-request-btn">+ Add Request</button>
                 </section>
             </div>
         </main>
