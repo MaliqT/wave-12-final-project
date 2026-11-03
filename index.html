@@ -8,6 +8,7 @@
 
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded">
         <link rel="stylesheet" href="style.css"/>
+        <script src="app.js" defer></script>
     </head>
     <body>
         <main>
@@ -21,31 +22,39 @@
 
                 <ul>
                     <li class="active">
-                        <span class="material-symbols-rounded" aria-hidden="true">
-                            home
-                        </span>
-                        Dashboard
+                        <button type="button" id="nav-dashboard">
+                            <span class="material-symbols-rounded" aria-hidden="true">
+                                home
+                            </span>
+                            Dashboard
+                        </button>
                     </li>
 
                     <li>
-                        <span class="material-symbols-rounded" aria-hidden="true">
-                            event_note
-                        </span>
-                        PTO Requests
+                        <button type="button" id="nav-requests">
+                            <span class="material-symbols-rounded" aria-hidden="true">
+                                event_note
+                            </span>
+                            PTO Requests
+                        </button>
                     </li>
 
                     <li>
-                        <span class="material-symbols-rounded" aria-hidden="true">
-                            calendar_month
-                        </span>
-                        Calendar
+                        <button type="button" id="nav-calendar">
+                            <span class="material-symbols-rounded" aria-hidden="true">
+                                calendar_month
+                            </span>
+                            Calendar
+                        </button>
                     </li>
 
                     <li>
-                        <span class="material-symbols-rounded" aria-hidden="true">
-                            settings
-                        </span>
-                        Settings
+                        <button type="button" id="nav-settings">
+                            <span class="material-symbols-rounded" aria-hidden="true">
+                                settings
+                            </span>
+                            Settings
+                        </button>
                     </li>
                 </ul>
 
@@ -80,9 +89,19 @@
                             </span>
 
                             <h3>Current PTO</h3>
+                            <button
+                                type="button"
+                                class="edit-summary-btn"
+                                data-field="currentBalance"
+                                aria-label="Edit current PTO balance"
+                                >
+                                    <span class="material-symbols-rounded" aria-hidden="true">
+                                        edit
+                                    </span>
+                            </button>
                         </div>
 
-                        <p class="summary-value">30.6 hrs</p>
+                        <p class="summary-value" id="current-pto-value"></p>
                         <p class="summary-label">Available Balance</p>
                     </article>
 
@@ -95,9 +114,19 @@
                             </span>
 
                             <h3>Accrual Rate</h3>
+                            <button
+                                type="button"
+                                class="edit-summary-btn"
+                                data-field="accrualRate"
+                                aria-label="Edit accrual rate"
+                                >
+                                    <span class="material-symbols-rounded" aria-hidden="true">
+                                        edit
+                                    </span>
+                            </button>
                         </div>
 
-                        <p class="summary-value">2.0 hrs</p>
+                        <p class="summary-value" id="accrual-rate-value"></p>
                         <p class="summary-label">Per Paycheck</p>
                     </article>
 
@@ -110,9 +139,19 @@
                             </span>
 
                             <h3>Next Paycheck</h3>
+                            <button
+                                type="button"
+                                class="edit-summary-btn"
+                                data-field="nextPaycheck"
+                                aria-label="Edit next paycheck date"
+                                >
+                                    <span class="material-symbols-rounded" aria-hidden="true">
+                                        edit
+                                    </span>
+                            </button>
                         </div>
 
-                        <p class="summary-value">Oct 5, 2026</p>
+                        <p class="summary-value" id="next-paycheck-value"></p>
                         <p class="summary-label">12 days away</p>
                     </article>
                 </section>
@@ -142,7 +181,7 @@
 
                     <div class="projection-result">
                         <p class="projection-result-label">Projected PTO</p>
-                        <p class="projection-result-value">68.5 hrs</p>
+                        <p class="projection-result-value" id="projected-value">0 hrs</p>
                     </div>
                 </section>
 
@@ -154,28 +193,83 @@
                         Upcoming PTO Requests
                     </h3>
                         <div class="requests-list">
-                            <article class="request">
-                                <p class="request-date">November 12 - November 14</p>
-                                <p class="request-hours">24 hrs</p>
-                                <span class="request-status status-scheduled">Scheduled</span>
-                            </article>
-
-                            <article class="request">
-                                <p class="request-date">December 24 - December 25</p>
-                                <p class="request-hours">16 hrs</p>
-                                <span class="request-status status-pending">Pending</span>
-                            </article>
-
-                            <article class="request">
-                                <p class="request-date">January 10 - January 16</p>
-                                <p class="request-hours">56 hrs</p>
-                                <span class="request-status status-planned">Planned</span>
-                            </article>
+                            <ul id="pto-request-list"></ul>
                         </div>
 
                         <button type="button"  class="add-request-btn">+ Add Request</button>
                 </section>
             </div>
         </main>
+        <dialog
+            id="edit-summary-dialog"
+            class="edit-summary-dialog"
+            aria-labelledby="edit-summary-title"
+        >
+            <form id="edit-summary-form">
+
+                <h2 id="edit-summary-title">
+                    Edit PTO
+                </h2>
+
+                <div class="edit-form-field">
+                    <label for="edit-summary-input" id="edit-summary-label">
+                        New Value
+                    </label>
+
+                    <input
+                        type="number"
+                        id="edit-summary-input"
+                        name="value"
+                        min="0"
+                        step="0.1"
+                        required
+                    >
+                </div>
+
+                <div class="edit-form-actions">
+                    <button
+                        type="button"
+                        id="cancel-summary-edit"
+                        class="edit-cancel-btn"
+                    >
+                        Cancel
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="edit-save-btn"
+                    >
+                        Save Changes
+                    </button>
+                </div>
+            </form>
+        </dialog>
+
+        <dialog id="add-request-dialog" class="add-request-dialog" aria-labelledby="add-request-title">
+            <form id="add-request-form">
+                <h2 id="add-request-title">Add PTO Request</h2>
+
+                <label for="request-start">Start Date</label>
+                <input type="date" id="request-start" required>
+
+                <label for="request-end">End Date</label>
+                <input type="date" id="request-end" required>
+
+                <label for="request-hours">PTO Hours</label>
+                <input type="number" id="request-hours" min="0.1" step="0.1" required>
+
+                <label for="request-status">Status</label>
+                <select id="request-status" required>
+                    <option value="planned">Planned</option>
+                    <option value="pending">Pending</option>
+                    <option value="scheduled">Scheduled</option>
+                </select>
+
+                <div class="add-request-actions">
+                    <button type="button" id="cancel-add-request">Cancel</button>
+                    <button type="submit">Add Request</button>
+                </div>
+            </form>
+        </dialog>
     </body>
 </html>

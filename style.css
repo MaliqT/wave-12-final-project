@@ -9,6 +9,190 @@ body {
     color: #172b4d;
 }
 
+body.dark-mode {
+    background-color: #141c28;
+    color: #e5eaf1;
+    color-scheme: dark;
+}
+
+/* Sidebar */
+
+body.dark-mode nav {
+    background-color: #1c2635;
+    border-right-color: #344154;
+}
+
+body.dark-mode .sidebar-brand h2,
+body.dark-mode .sidebar-note,
+body.dark-mode nav li {
+    color: #c5d0df;
+}
+
+body.dark-mode nav li.active {
+    background-color: #2a4057;
+    color: #8cc9ff;
+}
+
+/* Dashboard Header */
+
+body.dark-mode .dashboard-header h1 {
+    color: #f1f5fa;
+}
+
+body.dark-mode .dashboard-header p,
+body.dark-mode .dashboard-header time {
+    color: #9aacc0;
+}
+
+/* Cards */
+
+body.dark-mode .summary-card,
+body.dark-mode .projection,
+body.dark-mode .requests,
+body.dark-mode .dashboard-banner {
+    background-color: #1c2635;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+body.dark-mode .summary-card h3,
+body.dark-mode .projection h3,
+body.dark-mode .requests h3,
+body.dark-mode .summary-value,
+body.dark-mode .request-date,
+body.dark-mode .request-hours,
+body.dark-mode .banner-quote {
+    color: #f1f5fa;
+}
+
+body.dark-mode .summary-label,
+body.dark-mode .projection-description,
+body.dark-mode .banner-description {
+    color: #9aacc0;
+}
+
+/* Icons */
+
+body.dark-mode .card-icon-pto,
+body.dark-mode .card-icon-accrual {
+    background-color: #254739;
+    color: #8cdbb5;
+}
+
+body.dark-mode .card-icon-paycheck {
+    background-color: #35365c;
+    color: #b4b6ff;
+}
+
+body.dark-mode .section-title .material-symbols-rounded {
+    color: #8cc9ff;
+}
+
+body.dark-mode .banner-icon {
+    background-color: #254739;
+    color: #8cdbb5;
+}
+
+/* PTO Projection */
+
+body.dark-mode .projection-form input {
+    background-color: #141c28;
+    color: #f1f5fa;
+    border-color: #435268;
+}
+
+body.dark-mode .projection-result {
+    background-color: #254739;
+}
+
+body.dark-mode .projection-result-label {
+    color: #9ae2be;
+}
+
+body.dark-mode .projection-result-value {
+    color: #f1f5fa;
+}
+
+/* Upcoming PTO Requests */
+
+body.dark-mode .request:not(:last-child) {
+    border-bottom-color: #344154;
+}
+
+body.dark-mode .status-scheduled {
+    background-color: #254739;
+    color: #9ae2be;
+}
+
+body.dark-mode .status-pending {
+    background-color: #514329;
+    color: #f7d58a;
+}
+
+body.dark-mode .status-planned {
+    background-color: #344154;
+    color: #c5d0df;
+}
+
+/* Buttons */
+
+body.dark-mode .add-request-btn {
+    background-color: #2a4057;
+    color: #8cc9ff;
+}
+
+body.dark-mode .add-request-btn:hover {
+    background-color: #36536f;
+}
+
+body.dark-mode nav li button:hover {
+    background-color: #273548;
+}
+
+body.dark-mode nav li.active button:hover {
+    background-color: transparent;
+}
+
+body.dark-mode .edit-summary-btn {
+    background-color: #2a4057;
+    color: #c5d0df;
+}
+
+body.dark-mode .edit-summary-btn:hover {
+    background-color: #36536f;
+}
+
+body.dark-mode .edit-summary-dialog {
+    background-color: #1c2635;
+    color: #f1f5fa;
+}
+
+body.dark-mode #edit-summary-title {
+    color: #f1f5fa;
+}
+
+body.dark-mode .edit-form-field input {
+    background-color: #141c28;
+    color: #f1f5fa;
+    border-color: #435268;
+}
+
+body.dark-mode .edit-cancel-btn {
+    background-color: #2a4057;
+    color: #c5d0df;
+}
+
+body.dark-mode .add-request-dialog {
+    background-color: #1c2635;
+    color: #f1f5fa;
+}
+
+body.dark-mode .add-request-dialog input,
+body.dark-mode .add-request-dialog select {
+    background-color: #141c28;
+    color: #f1f5fa;
+    border-color: #435268;
+}
+
 .material-symbols-rounded {
     font-size: 24px;
     line-height: 1;
@@ -74,17 +258,39 @@ nav ul {
 }
 
 nav li {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-
-    padding: 12px 15px;
     border-radius: 8px;
     color: #405775;
 }
 
+nav li button {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    width: 100%;
+    padding: 12px 15px;
+
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+
+    color: inherit;
+    font: inherit;
+    font-weight: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
 nav li .material-symbols-rounded {
     font-size: 20px;
+}
+
+nav li button:hover {
+    background-color: #b4d4f5;
+}
+
+nav li.active button:hover {
+    background-color: transparent;
 }
 
 nav li.active {
@@ -193,6 +399,38 @@ nav li.active {
 
 .summary-heading h3 {
     margin: 0;
+}
+
+.summary-card .summary-heading h3 {
+    margin: 0;
+}
+
+.edit-summary-btn {
+    margin-left: auto;
+
+    width: 32px;
+    height: 32px;
+
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    background-color: #eef3fa;
+    color: #405775;
+
+    border: none;
+    border-radius: 8px;
+
+    cursor: pointer;
+}
+
+.edit-summary-btn .material-symbols-rounded {
+    font-size: 18px;
+}
+
+.edit-summary-btn:hover {
+    background-color: #dce9f7;
 }
 
 .card-icon {
@@ -374,7 +612,7 @@ nav li.active {
 
 .request {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto auto;
+    grid-template-columns: minmax(0, 1fr) auto auto auto;
     align-items: center;
     gap: 10px;
     padding: 12px 0;
@@ -409,6 +647,33 @@ nav li.active {
     font-weight: 500;
     text-align: center;
     white-space: nowrap;
+}
+
+.delete-request-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 30px;
+    height: 30px;
+
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: #c55a5a;
+
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+
+.delete-request-btn:hover {
+    background-color: rgba(197, 90, 90, 0.15);
+}
+
+#pto-request-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
 .status-scheduled {
@@ -453,6 +718,56 @@ nav li.active {
     outline-offset: 2px;
 }
 
+.add-request-dialog {
+    width: min(420px, calc(100% - 32px));
+    padding: 24px;
+    border: none;
+    border-radius: 12px;
+    background-color: white;
+    color: #172b4d;
+}
+
+.add-request-btn::backdrop {
+    background-color: rgba(0, 0, 0, 0.55);
+}
+
+#add-request-form {
+    display: grid;
+    gap: 12px;
+}
+
+#add-request-form h2 {
+    margin: 0 0 8px;
+}
+
+#add-request-form input,
+#add-request-form select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #dae3ec;
+    border-radius: 8px;
+    font: inherit;
+}
+
+.add-request-actions {
+    display: felx;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.add-request-actions button {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.add-request-actions button[type="submit"] {
+    background-color: #279377;
+    color: white;
+}
+
 .section-title {
     display: flex;
     align-items: center;
@@ -465,11 +780,6 @@ nav li.active {
     color: #173d6b;
     flex-shrink: 0;
 }
-
-
-
-
-
 
 
 /* Stretch: Mobile Device Design*/
@@ -529,6 +839,10 @@ nav li.active {
 
     nav li {
         flex: 1 1 140px;
+        padding: 0;
+    }
+
+    nav li button {
         justify-content: center;
         padding: 10px;
     }
@@ -578,12 +892,16 @@ nav li.active {
 
 @media (max-width: 430px) {
     .request {
-        grid-template-columns: minmax(0, 1fr) auto;
+        grid-template-columns: minmax(0, 1fr) auto auto;
         row-gap: 8px;
     }
 
     .request-date {
         grid-column: 1 / -1;
+    }
+
+    .delete-request-btn {
+        grid-column: 3 / 4;
     }
 
     .request-hours {
