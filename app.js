@@ -45,6 +45,10 @@ function renderData() {
     const ptoRequestList = document.getElementById("pto-request-list");
     const ptoRequestData = ptoData.ptoRequests;
 
+    const currentDate = document.getElementById("date-time");
+    console.log(formatDate(new Date()));
+    currentDate.textContent = formatDate(new Date());
+
     ptoValue.textContent = ptoData.currentBalance.toFixed(1);
     accrualRateValue.textContent = ptoData.accrualRate.toFixed(1);
     nextPaycheckValue.textContent = formatDate(ptoData.nextPaycheck);
@@ -127,9 +131,8 @@ function dateBreakdown(date) {
     return new Date(year, month, day);
 }
 
-function formatDate(dateString) {
-
-    const formatedDate = dateBreakdown(dateString);
+function formatDate(dateInput) {
+    const date = dateInput instanceof Date ? dateInput : dateBreakdown(dateInput);
 
     const formatter = new Intl.DateTimeFormat('en-US', {
         month: 'short',
@@ -138,7 +141,7 @@ function formatDate(dateString) {
     });
     
 
-    return formatter.format(formatedDate);
+    return formatter.format(date);
 }
 
 function darkMode(isDark) {
