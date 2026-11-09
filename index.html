@@ -8,6 +8,8 @@
 
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded">
         <link rel="stylesheet" href="style.css"/>
+        <script src="https://cdn.jsdelivr.net/npm/axios@1.13.2/dist/axios.min.js" defer></script>
+        <script src="weather.js" defer></script>
         <script src="app.js" defer></script>
     </head>
     <body>
@@ -31,15 +33,6 @@
                     </li>
 
                     <li>
-                        <button type="button" id="nav-requests">
-                            <span class="material-symbols-rounded" aria-hidden="true">
-                                event_note
-                            </span>
-                            PTO Requests
-                        </button>
-                    </li>
-
-                    <li>
                         <button type="button" id="nav-calendar">
                             <span class="material-symbols-rounded" aria-hidden="true">
                                 calendar_month
@@ -56,13 +49,28 @@
                             Settings
                         </button>
                     </li>
+
+                    <li>
+                        <a href="contact.html" id="nav-contact">
+                            <span class="material-symbols-rounded" aria-hidden="true">
+                                mail
+                            </span>
+                            Contact Us
+                        </a>
+                    </li>
                 </ul>
 
                 <div class="sidebar-note">
-                    <span class="material-symbols-rounded" aria-hidden="true">
-                        light_mode
-                    </span>
-                    <p>More time for<br>what matters</p>
+                    <h3>Local Weather</h3>
+                    <p id="weather-temperature">Loading...</p>
+                    <p id="weather-condition">Checking conditions...</p>
+                    <span
+                        id="weather-icon"
+                        class="material-symbols-rounded"
+                        aria-hidden="true"
+                    >
+                        cloud
+                </span>
                 </div>
             </nav>
 
@@ -73,7 +81,7 @@
                         <p>Here's your PTO overview</p>
                     </div>
 
-                    <time datatime="2026-10-3">
+                    <time id="date-time" datatime="2026-10-3">
                         Sat, Oct 3, 2026
                     </time>
                 </header>
