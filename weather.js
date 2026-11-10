@@ -26,7 +26,10 @@ async function getWeather() {
         weatherIcon.textContent = getWeatherIcons(weatherCode);
         
     } catch (err) {
-        console.err(`Failed to retrieve weather: ${err}`);
+        console.error(`Failed to retrieve weather: ${err}`);
+
+        document.getElementById("weather-condition").textContent = "Weather unavailable";
+        document.getElementById("weather-temperature").textContent = "--°F";
     }
 }
 

@@ -8,7 +8,7 @@ const defaultPtoData = {
     accrualRate: 2.0,
     nextPaycheck: "2026-10-30",
     payFrequency: 14,
-    projectionValue: 68.5,
+    lastPtoProcessedDate: null,
 
     ptoRequests: [
         {
@@ -36,6 +36,9 @@ const defaultPtoData = {
 };
 
 let ptoData = loadDataFromStorage();
+
+updateNextPaycheck();
+updateUsedPto();
 console.log(ptoData);
 
 function renderData() {
@@ -46,8 +49,14 @@ function renderData() {
     const ptoRequestData = ptoData.ptoRequests;
 
     const currentDate = document.getElementById("date-time");
-    console.log(formatDate(new Date()));
-    currentDate.textContent = formatDate(new Date());
+    const today = new Date();
+    currentDate.textContent = formatDate(today);
+
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const day = String(today.getDate()).padStart(2, "0");
+
+    currentDate.dateTime = `${year}-${month}-${day}`;
 
     ptoValue.textContent = ptoData.currentBalance.toFixed(1);
     accrualRateValue.textContent = ptoData.accrualRate.toFixed(1);
@@ -62,6 +71,118 @@ function renderData() {
 }
 
 renderData();
+
+function updateNextPaycheck() {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const nextPayDay = dateBreakdown(ptoData.nextPaycheck);
+    const payFrequency = ptoData.payFrequency;
+
+    if (Number.isNaN(nextPayDay.getTime()) || !Number.isInteger(payFrequency) || payFrequency <= 0 || 
+        !Number.isFinite(ptoData.currentBalance) || !Number.isFinite(ptoData.accrualRate) || ptoData.accrualRate < 0) {
+
+        return;
+    }
+
+    let previousPaychecks = 0;
+
+    while (nextPayDay <= today) {
+        ptoData.currentBalance += ptoData.accrualRate;
+        previousPaychecks++;
+
+        nextPayDay.setDate(nextPayDay.getDate() + payFrequency);
+    }
+
+    if (previousPaychecks === 0) {
+        return;
+    }
+yesterdaysDateyes
+
+    const year = nextPayDay.getFullYear();
+    const month = String(nextPayDay.getMonth() + 1).padStart(2, "0");
+    const day = String(nextPayDay.getDate()).padStart(2, "0");
+
+    ptoData.nextPaycheck = `${year}-${month}-${day}`;
+
+    localStorage.setItem("profileData", JSON.stringify(ptoData));
+}
+
+
+function updateUsedPto() {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    const year = yesterday.getFullYear();
+    const month = String(yesterday.getMonth() + 1).padStart(2, "0");
+    const day = String(yesterday.getDate()).padStart(2, "0");
+
+    const yesterdaysDate = `${year}-${month}-${day}`;
+
+    if (!ptoData.lastPtoProcessedDate) {
+        ptoData.lastPtoProcessedDate = yesterdaysDate;
+        localStorage.setItem("profileData", JSON.stringify(ptoData));
+        return;
+    }
+
+    const lastProcessed = dateBreakdown(ptoData.lastPtoProcessedDate);
+
+    if (Number.isNaN(lastProcessed.getTime())) {
+        console.error("Invalid last PTO processed date.");
+        return;
+    }
+
+    if (lastProcessed >= yesterday) {
+        return;
+    }
+
+    const firstUnprocessedDay = new Date(lastProcessed);
+    firstUnprocessedDay.setDate(firstUnprocessedDay.getDate() + 1);
+
+    let totalHoursUsed = 0;
+
+    ptoData.ptoRequests.forEach((request) => {
+        if (request.status !== "scheduled") {
+            return;
+        }
+
+        const scheduledStart = dateBreakdown(request.startDate);
+        const scheduledEnd = dateBreakdown(request.endDate);
+        const hours = Number(request.hours);
+
+        if (Number.isNaN(scheduledStart.getTime()) || Number.isNaN(scheduledEnd.getTime()) || scheduledEnd < scheduledStart ||
+            !Number.isFinite(hours) || hours < 0) {
+
+            return;
+        }
+
+        const overlapStart = scheduledStart > firstUnprocessedDay ? scheduledStart : firstUnprocessedDay;
+
+        const overlapEnd = scheduledEnd < yesterday ? scheduledEnd : yesterday;
+
+        if (overlapStart > overlapEnd) {
+            return;
+        }
+
+        const totalDays = countDaysInclusive(scheduledStart, scheduledEnd);
+        const usedDays = countDaysInclusive(overlapStart, overlapEnd);
+
+        const hoursUsed = hours * (usedDays / totalDays);
+
+        totalHoursUsed += hoursUsed;
+    });
+
+    ptoData.currentBalance -= totalHoursUsed;
+    ptoData.lastPtoProcessedDate = yesterdaysDate;
+
+    localStorage.setItem("profileData", JSON.stringify(ptoData));
+
+    console.log(`PTO deducted: ${totalHoursUsed} hours`);
+}
+
 
 function addPtoRequest(newRequest) {
     // Create the new list element for pto request to be added
@@ -119,7 +240,43 @@ function loadDataFromStorage() {
         return structuredClone(defaultPtoData);
     }
 
-    return JSON.parse(saved);
+    try {
+        const parsedData = JSON.parse(saved);
+
+        if (parsedData === null || typeof parsedData !== "object" || Array.isArray(parsedData)) {
+            throw new Error("Invalid PTO data");
+        }
+
+        const data = {
+            ...structuredClone(defaultPtoData),
+            ...parsedData
+        };
+
+        for (const field of ["currentBalance", "accrualRate"]) {
+            const value = data[field];
+
+            const number = (typeof value === "number" || (typeof value === "string" && value.trim() !== "")) ? Number(value) : NaN;
+
+            data[field] = Number.isFinite(number) && number >= 0 ? number : defaultPtoData[field];
+        }
+
+        if (!Number.isInteger(data.payFrequency) || data.payFrequency <= 0) {
+            data.payFrequency = defaultPtoData.payFrequency;
+        }
+
+        if (typeof data.nextPaycheck !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(data.nextPaycheck)) {
+            data.nextPaycheck = defaultPtoData.nextPaycheck;
+        }
+
+        if (!Array.isArray(data.ptoRequests)) {
+            data.ptoRequests = structuredClone(defaultPtoData.ptoRequests);
+        }
+
+        return data;
+    } catch (err) {
+        console.warn("Unable to load saved PTO data:", err);
+        return structuredClone(defaultPtoData);
+    }
 }
 
 function dateBreakdown(date) {
