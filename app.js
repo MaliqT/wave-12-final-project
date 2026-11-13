@@ -97,7 +97,6 @@ function updateNextPaycheck() {
     if (previousPaychecks === 0) {
         return;
     }
-yesterdaysDateyes
 
     const year = nextPayDay.getFullYear();
     const month = String(nextPayDay.getMonth() + 1).padStart(2, "0");
@@ -306,7 +305,7 @@ function darkMode(isDark) {
         document.body.classList.add("dark-mode");
         //document.getElementById("theme-btn").textContent = "Light";
     } else {
-        document.body.classList.remove("dark");
+        document.body.classList.remove("dark-mode");
         //document.getElementById("theme-btn").textContent = "Dark";
     }
 }
